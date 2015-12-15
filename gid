@@ -14,6 +14,12 @@ function help {
     echo '-r,--remote=REMOTE            Push to REMOTE during git push. By default this is origin.'
 }
 
+branch='master'
+directory='.'
+force=''
+lazy='false'
+remote='origin'
+
 # Get options
 while [ $# -gt 0 ]
 do
@@ -22,6 +28,31 @@ do
         help
         exit 0
         ;;
+        -b|--branch)
+        branch="$2"
+        shift
+        ;;
+        -f|--force)
+        force='-f'
+        ;;
+        -l|--lazy)
+        lazy='true'
+        ;;
+        -r|--remote)
+        remote="$2"
+        shift
+        ;;
+        *)
+        directory="$1"
+        ;;
     esac
     shift
 done
+
+cd "$directory"
+
+# Where the real work starts
+git add -A :/
+git commit
+git pull $force $remote $branch
+git push $force $remote $branch
