@@ -17,7 +17,7 @@ gid -b 'your-master' -r 'your-origin'
 ### I want to force push/pull to erase any merge conflicts.
 
 ```bash
-gid -f
+gid --force
 ```
 
 ### Can I specify a message without having to go through $COMMIT_EDITOR?
@@ -26,7 +26,7 @@ gid -f
 gid -m 'Your message'
 ```
 
-#### Heck, do I even have to specify a commit message?
+#### Heck, do I even have to specify a commit message? Can't you just generate one for me?
 
 ```bash
 gid --lazy # or -l for the truly indolent
