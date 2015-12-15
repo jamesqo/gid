@@ -7,11 +7,11 @@ function help {
     echo 'cd to [directory] and git add/commit/pull/push everything all in one go.'
     echo
     echo 'Options:'
-    echo '-b,--branch=BRANCH            Set branch to be checked out. By default this is master.'
+    echo '-b,--branch BRANCH            Set branch to be checked out. By default this is master.'
     echo '-f,--force                    Force push/pull any conflicting changes.'
     echo "-l,--lazy                     Set commit message to '$default_message.'"
-    echo '-m,--message=MESSAGE          Set MESSAGE as the git commit message.'
-    echo '-r,--remote=REMOTE            Push to REMOTE during git push. By default this is origin.'
+    echo '-m,--message MESSAGE          Set MESSAGE as the git commit message.'
+    echo '-r,--remote REMOTE            Push to REMOTE during git push. By default this is origin.'
 }
 
 branch='master'
