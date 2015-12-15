@@ -47,6 +47,11 @@ do
         remote="$2"
         shift
         ;;
+        --) # Stop parsing
+        shift
+        directory="$@"
+        break # From outer loop
+        ;;
         *)
         directory="$1"
         ;;
