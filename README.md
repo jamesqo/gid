@@ -8,8 +8,26 @@ gid (aka Get It Done) is a script that adds, commits, and pushes to your Git rep
 gid '<your git repo>'
 ```
 
-### I don't want to enter my username/password when I push.
+### My remote/branch isn't named origin/master.
 
 ```bash
-gid '...' --lazy # or -l for the truly indolent
+gid -b 'your-master' -r 'your-origin'
+```
+
+### I want to force push/pull to erase any merge conflicts.
+
+```bash
+gid -f
+```
+
+### Can I specify a message without having to go through $COMMIT_EDITOR?
+
+```bash
+gid -m 'Your message'
+```
+
+#### Heck, do I even have to specify a commit message?
+
+```bash
+gid --lazy # or -l for the truly indolent
 ```
