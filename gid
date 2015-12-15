@@ -9,7 +9,7 @@ function help {
     echo 'Options:'
     echo '-b,--branch=BRANCH            Set branch to be checked out. By default this is master.'
     echo '-f,--force                    Force push/pull any conflicting changes.'
-    echo '-l,--lazy                     If -m is not specified, set commit message to "$default_message." Username/password are entered for you during git push.'
+    echo "-l,--lazy                     Set commit message to '$default_message.'"
     echo '-m,--message=MESSAGE          Set MESSAGE as the git commit message.'
     echo '-r,--remote=REMOTE            Push to REMOTE during git push. By default this is origin.'
 }
@@ -18,7 +18,6 @@ branch='master'
 default_message='Automatically committed by gid'
 directory='.'
 force=''
-lazy='false'
 message=''
 remote='origin'
 
@@ -38,7 +37,7 @@ do
         force='-f'
         ;;
         -l|--lazy)
-        lazy='true'
+        message="$default_message"
         ;;
         -m|--message)
         message="$2"
@@ -60,12 +59,9 @@ cd "$directory"
 # Where the real work starts
 git checkout $branch
 git add -A :/
-if [ $lazy = 'false' -a -z $message ]; then
+if [ -z $message ]; then
     git commit
 else
-    if [ -z $message ]; then
-        message="$default_message"
-    fi
     git commit -m "$message"
 fi
 git pull $force $remote $branch
