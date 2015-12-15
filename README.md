@@ -1,6 +1,6 @@
 # gid
 
-gid, aka **G**et **I**t **D**one, is a script that adds, commits, and pushes to your Git repo in one go.
+gid (aka Get It Done) is a script that adds, commits, and pushes to your Git repo in one go.
 
 ## Usage
 
