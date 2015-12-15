@@ -14,6 +14,10 @@ function help {
     echo '-r,--remote REMOTE            Push to REMOTE during git push. By default this is origin.'
 }
 
+function error {
+    echo "$@" 1>&2
+}
+
 branch='master'
 default_message='Automatically committed by gid'
 directory='.'
@@ -59,15 +63,47 @@ do
     shift
 done
 
-cd "$directory"
+cd "$directory" 2> /dev/null
+if [ $? -ne 0 ]; then
+    error "$directory does not exist."
+    exit 1
+fi
 
 # Where the real work starts
 git checkout $branch
+if [ $? -ne 0 ]; then
+    error "git checkout $branch failed."
+    exit 2
+fi
+
 git add -A :/
+if [ $? -ne 0 ]; then
+    error 'git add -A :/ failed.'
+    exit 3
+fi
+
 if [ -z $message ]; then
     git commit
+    if [ $? -ne 0 ]; then
+        error 'git commit failed.'
+        exit 4
+    fi
 else
     git commit -m "$message"
+    if [ $? -ne 0 ]; then
+        error "git commit -m '$message' failed."
+        exit 5
+    fi
 fi
+
 git pull $force $remote $branch
+if [ $? -ne 0 ]; then
+    error "git pull $force $remote $branch failed."
+    exit 6
+fi
+
 git push $force $remote $branch
+if [ $? -ne 0 ]; then
+    error "git push $force $remote $branch failed."
+    exit 7
+fi
