@@ -1,0 +1,27 @@
+#!/bin/bash
+
+function help {
+    echo 'gid adds, commits, and pushes your changes in a single command.'
+    echo
+    echo 'Usage: gid [directory]'
+    echo 'cd to [directory] and git add/commit/pull/push everything all in one go.'
+    echo
+    echo 'Options:'
+    echo '-b,--branch=BRANCH            Set branch to be checked out. By default this is master.'
+    echo '-f,--force                    Force push/pull any conflicting changes.'
+    echo '-l,--lazy                     If -m is not specified, set commit message to "Automatically committed by gid." Username/password are entered for you during git push.'
+    echo '-m,--message=MESSAGE          Set MESSAGE as the git commit message.'
+    echo '-r,--remote=REMOTE            Push to REMOTE during git push. By default this is origin.'
+}
+
+# Get options
+while [ $# -gt 0 ]
+do
+    case "$1" in
+        '-?'|-h|--help) # ? matches a single character by default, we don't want this behavior
+        help
+        exit 0
+        ;;
+    esac
+    shift
+done
