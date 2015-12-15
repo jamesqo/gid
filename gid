@@ -58,11 +58,12 @@ done
 cd "$directory"
 
 # Where the real work starts
+git checkout $branch
 git add -A :/
-if [ $lazy = 'false' -a "$message" = '' ]; then
+if [ $lazy = 'false' -a -z $message ]; then
     git commit
 else
-    if [ "$message" = '' ]; then
+    if [ -z $message ]; then
         message="$default_message"
     fi
     git commit -m "$message"
