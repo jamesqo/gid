@@ -1,5 +1,7 @@
 # gid
 
+![Logo](icons/logo.png)
+
 gid (aka Get It Done) is a script that adds, commits, and pushes to your Git repo in one go.
 
 ## Usage
