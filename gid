@@ -82,7 +82,7 @@ if [ $? -ne 0 ]; then
     exit 3
 fi
 
-if [ -z $message ]; then
+if [ -z "$message" ]; then
     git commit
     if [ $? -ne 0 ]; then
         error 'git commit failed.'
