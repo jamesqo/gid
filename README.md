@@ -31,3 +31,36 @@ gid -m 'Your message'
 ```bash
 gid --lazy # or -l for the truly indolent
 ```
+
+## Supported Platforms
+
+Any system that supports Bash should be good to go, including:
+
+- Linux
+- OS X
+- Git Bash (aka MinGW)
+- Cygwin
+
+## Installing gid
+
+Linux and OS X:
+
+```bash
+installpath='/usr/local/bin/gid' # modify as needed
+curl -sSL 'https://github.com/jamesqo/gid/raw/master/gid' | sudo tee $installpath
+chmod +x $installpath
+```
+
+Windows (via Cygwin or Git Bash):
+
+```bash
+curl -sSL 'https://github.com/jamesqo/gid/raw/master/install.sh' | xargs -0 bash --noprofile -c && PATH+=:~/AppData/Local/gid
+```
+
+## Contributing
+
+Contributors are welcome! Please feel free to report bugs or make pull requests to this repo.
+
+## License
+
+gid is licensed under the [BSD simplified license](license.bsd).
