@@ -1,5 +1,7 @@
 # gid
 
+![](icons/logo.png)
+
 gid is a script that adds, commits, and pushes to your Git repo in one go.
 
 ## Usage
