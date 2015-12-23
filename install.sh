@@ -21,7 +21,7 @@ script=$(curl -sSL 'https://github.com/jamesqo/gid/raw/master/gid')
 
 # Write it out to AppData/Local
 cd ~/AppData/Local
-mkdir gid && cd gid
+mkdir -p gid && cd gid
 echo "$script" > gid
 
 # Make sure gid is executable
