@@ -18,6 +18,15 @@ function error {
     echo "$@" 1>&2
 }
 
+function try_run {
+    bash -c "$@"
+    exit_code=$?
+    if [ $exit_code -ne 0 ]; then
+        error "$* failed! Exit code: $exit_code"
+        exit $exit_code
+    fi
+}
+
 branch='master'
 default_message='Automatically committed by gid'
 directory='.'
@@ -63,47 +72,25 @@ do
     shift
 done
 
-cd "$directory" 2> /dev/null
-if [ $? -ne 0 ]; then
-    error "$directory does not exist."
-    exit 1
-fi
-
 # Where the real work starts
-git checkout $branch
-if [ $? -ne 0 ]; then
-    error "git checkout $branch failed."
-    exit 2
+try_run "cd '$directory' 2> /dev/null"
+original_branch=$(try_run 'git rev-parse --abbrev-ref HEAD')
+
+if [ "$original_branch" != "$branch" ]; then
+    try_run "git checkout $branch"
 fi
 
-git add -A :/
-if [ $? -ne 0 ]; then
-    error 'git add -A :/ failed.'
-    exit 3
-fi
+try_run 'git add -A :'
 
 if [ -z "$message" ]; then
-    git commit
-    if [ $? -ne 0 ]; then
-        error 'git commit failed.'
-        exit 4
-    fi
+    try_run 'git commit'
 else
-    git commit -m "$message"
-    if [ $? -ne 0 ]; then
-        error "git commit -m '$message' failed."
-        exit 5
-    fi
+    try_run "git commit -m '$message'"
 fi
 
-git pull $force $remote $branch
-if [ $? -ne 0 ]; then
-    error "git pull $force $remote $branch failed."
-    exit 6
-fi
+try_run "git pull $force $remote $branch"
+try_run "git push $force $remote $branch"
 
-git push $force $remote $branch
-if [ $? -ne 0 ]; then
-    error "git push $force $remote $branch failed."
-    exit 7
+if [ "$original_branch" != "$branch" ]; then
+    try_run "git checkout $original_branch"
 fi
