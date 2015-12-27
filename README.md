@@ -45,18 +45,10 @@ Any system that supports Bash should be good to go, including:
 
 ## Installing gid
 
-Linux and OS X:
+gid uses [sinister](https://github.com/jamesqo/sinister) for installation. To get it, run
 
 ```bash
-installpath='/usr/local/bin/gid' # modify as needed
-curl -sSL 'https://github.com/jamesqo/gid/raw/master/gid' | sudo tee $installpath
-chmod +x $installpath
-```
-
-Windows (via Cygwin or Git Bash):
-
-```bash
-curl -sSL 'https://github.com/jamesqo/gid/raw/master/install.sh' | xargs -0 bash --noprofile -c && PATH+=:~/AppData/Local/gid
+sh <(curl -sSL http://git.io/sinister) -u http://github.com/jamesqo/gid/raw/master/gid
 ```
 
 ## Contributing
