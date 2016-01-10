@@ -80,7 +80,7 @@ if [ "$original_branch" != "$branch" ]; then
     try_run "git checkout $branch"
 fi
 
-try_run 'git add -A :'
+try_run 'git add -A :/'
 
 if [ -z "$message" ]; then
     try_run 'git commit'
