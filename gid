@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function help {
     echo 'gid adds, commits, and pushes your changes in a single command.'
@@ -19,7 +19,7 @@ function error {
 }
 
 function try_run {
-    bash -c "$@"
+    "$@"
     exit_code=$?
     if [ $exit_code -ne 0 ]; then
         error "$* failed! Exit code: $exit_code"
@@ -27,12 +27,12 @@ function try_run {
     fi
 }
 
-branch='master'
+branch=master
 default_message='Automatically committed by gid'
-directory='.'
-force=''
-message=''
-remote='origin'
+directory=.
+force=
+message=
+remote=origin
 
 # Get options
 while [ $# -gt 0 ]
@@ -43,54 +43,54 @@ do
         exit 0
         ;;
         -b|--branch)
-        branch="$2"
+        branch=$2
         shift
         ;;
         -f|--force)
-        force='-f'
+        force=-f
         ;;
         -l|--lazy)
-        message="$default_message"
+        message=$default_message
         ;;
         -m|--message)
-        message="$2"
+        message=$2
         shift
         ;;
         -r|--remote)
-        remote="$2"
+        remote=$2
         shift
         ;;
         --) # Stop parsing
         shift
-        directory="$@"
+        directory=$@
         break # From outer loop
         ;;
         *)
-        directory="$1"
+        directory=$1
         ;;
     esac
     shift
 done
 
 # Where the real work starts
-try_run "cd '$directory' 2> /dev/null"
-original_branch=$(try_run 'git rev-parse --abbrev-ref HEAD')
+try_run cd "$directory" 2> /dev/null
+original_branch=$(try_run git rev-parse --abbrev-ref HEAD)
 
 if [ "$original_branch" != "$branch" ]; then
     try_run "git checkout $branch"
 fi
 
-try_run 'git add -A :/'
+try_run git add -A :/ # add everything from the repo root
 
 if [ -z "$message" ]; then
-    try_run 'git commit'
+    try_run git commit
 else
-    try_run "git commit -m '$message'"
+    try_run git commit -m "$message"
 fi
 
-try_run "git pull $force $remote $branch"
-try_run "git push $force $remote $branch"
+try_run git pull $force $remote $branch
+try_run git push $force $remote $branch
 
 if [ "$original_branch" != "$branch" ]; then
-    try_run "git checkout $original_branch"
+    try_run git checkout $original_branch
 fi
